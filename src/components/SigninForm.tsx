@@ -17,7 +17,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { signIn } from 'next-auth/react';
 
-export default function UserAuthForm() {
+export default function SigninForm() {
   const router = useRouter();
 
   const form = useForm<AuthFormData>({
@@ -48,7 +48,7 @@ export default function UserAuthForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
         <FormField
           control={form.control}
           name='email'
