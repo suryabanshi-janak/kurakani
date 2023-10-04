@@ -24,7 +24,7 @@ export default function Navbar() {
               Pricing
             </Link>
             <Link
-              href='/sigin'
+              href='/signin'
               className={buttonVariants({ variant: 'ghost' })}
             >
               Sign in

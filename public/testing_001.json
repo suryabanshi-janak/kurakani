@@ -1,0 +1,82 @@
+{
+  "Message": {
+    "msg_id": "1",
+    "Responses": {
+      "No": {
+        "action": "",
+        "msg_id": "3",
+        "Responses": {
+          "No": {
+            "action": "",
+            "msg_id": "7",
+            "Responses": {},
+            "send_message": "Please try to make the payment of your due {{overdue_amount}} else late fee charges may get applied accordingly.",
+            "action_attribute": "",
+            "default_response": {},
+            "response_expected": 0,
+            "response_predefined": 0
+          },
+          "Yes": {
+            "action": "update_hardship_flag",
+            "msg_id": "4",
+            "Responses": {
+              "No": {
+                "action": "",
+                "msg_id": "6",
+                "Responses": {},
+                "send_message": "Please share your hardship here so that we can assist you better. Thanks.",
+                "action_attribute": "",
+                "default_response": {},
+                "response_expected": 0,
+                "response_predefined": 0
+              },
+              "Yes, call now": {
+                "action": "update_call_required_details",
+                "msg_id": "",
+                "action_attribute": { "day": ["Wednesday"] }
+              },
+              "Yes, call later": {
+                "action": "update_call_required_details",
+                "msg_id": "5",
+                "Responses": {},
+                "send_message": "Please provide your preferred day and time for the call. We will book it for you and our agent will reach out to you accordingly.",
+                "action_attribute": { "day": ["Thursday"] },
+                "default_response": {
+                  "action": "",
+                  "msg_id": "2",
+                  "action_attribute": ""
+                },
+                "response_expected": 1,
+                "response_predefined": 0
+              }
+            },
+            "send_message": "Do you want to us connect you with any agent so that you can share your concern?",
+            "action_attribute": "",
+            "default_response": {},
+            "response_expected": 1,
+            "response_predefined": 1
+          }
+        },
+        "send_message": "Are you facing difficulty paying your dues? Let us know so that we can assist you better.",
+        "action_attribute": "",
+        "default_response": {},
+        "response_expected": 1,
+        "response_predefined": 1
+      },
+      "Yes": {
+        "action": "update_ptp_commitment",
+        "msg_id": "2",
+        "Responses": {},
+        "send_message": "We have updated your response in our records. Thank you!",
+        "action_attribute": { "relative_date": "CURRENT_DATE + 5" },
+        "default_response": {},
+        "response_expected": 0,
+        "response_predefined": 0
+      }
+    },
+    "send_message": "Hi {{pii.first_name}}, you have a pending due of {{overdue_amount}} since {{delinquent_since_date}}. Please let us know if you can make the payment in next 5 days.",
+    "default_response": {},
+    "response_expected": 1,
+    "response_predefined": 1
+  }
+}
