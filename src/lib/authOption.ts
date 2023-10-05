@@ -6,7 +6,7 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: 'credentials',
       credentials: {},
-      async authorize(credentials, req) {
+      async authorize() {
         const user = { id: 1 };
         return user as any;
       },
