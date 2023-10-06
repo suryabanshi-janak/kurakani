@@ -1,3 +1,4 @@
+import Dashboard from '@/components/Dashboard';
 import { getAuthSession } from '@/lib/auth-option';
 import { redirect } from 'next/navigation';
 
@@ -6,5 +7,5 @@ export default async function DashboardPage() {
 
   if (!session) redirect('/signin');
 
-  return <div>DashboardPage</div>;
+  return <Dashboard />;
 }

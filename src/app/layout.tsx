@@ -4,7 +4,7 @@ import Providers from '@/components/Providers';
 import { cn } from '@/lib/utils';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ['latin'], preload: true });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
