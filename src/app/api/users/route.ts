@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     const { email, firstname, lastname, password } =
       SignUpValidator.parse(body);
 
-    const existingUser = await db.user.findUnique({
+    const existingUser = await db.user.findFirst({
       where: {
         email,
       },

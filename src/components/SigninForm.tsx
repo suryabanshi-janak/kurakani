@@ -1,8 +1,10 @@
 'use client';
 
+import * as React from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
 import { AuthFormData, AuthValidator } from '@/lib/validators/auth';
 
 import {
@@ -19,6 +21,7 @@ import { signIn } from 'next-auth/react';
 
 export default function SigninForm() {
   const router = useRouter();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const form = useForm<AuthFormData>({
     resolver: zodResolver(AuthValidator),
@@ -30,6 +33,7 @@ export default function SigninForm() {
 
   const onSubmit = async (data: AuthFormData) => {
     try {
+      setIsLoading(true);
       const res = await signIn('credentials', {
         email: data.email,
         password: data.password,
@@ -43,6 +47,8 @@ export default function SigninForm() {
       router.push('/dashboard');
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -77,7 +83,8 @@ export default function SigninForm() {
           )}
         />
 
-        <Button type='submit' className='w-full'>
+        <Button type='submit' className='w-full' disabled={isLoading}>
+          {isLoading && <Loader2 className='w-4 h-4 animate-spin mr-2' />}
           Continue
         </Button>
       </form>
