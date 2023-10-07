@@ -1,9 +1,10 @@
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { NextAuthOptions, getServerSession } from 'next-auth';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { db } from './db';
 import { compare } from 'bcrypt';
 import { User } from '@prisma/client';
+
+import { db } from './db';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -48,7 +49,6 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, user }) {
       if (!user) {
-        token.id = crypto.randomUUID();
         return token;
       }
 
