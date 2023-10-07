@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Loader2, MessageSquare, Plus, Trash } from 'lucide-react';
+import { Ghost, Loader2, MessageSquare, Plus, Trash } from 'lucide-react';
 import { format } from 'date-fns';
 import Skeleton from 'react-loading-skeleton';
 
@@ -100,7 +100,11 @@ export default function Dashboard() {
       ) : isLoading ? (
         <Skeleton count={3} height={100} className='my-3' />
       ) : (
-        <div></div>
+        <div className='mt-16 flex flex-col items-center gap-2'>
+          <Ghost className='h-8 w-8 text-zinc-800' />
+          <h3 className='font-semibold text-xl'>Pretty empty around here</h3>
+          <p>Let&apos; upload your first PDF.</p>
+        </div>
       )}
     </main>
   );
