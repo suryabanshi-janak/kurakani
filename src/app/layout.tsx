@@ -5,6 +5,8 @@ import { cn } from '@/lib/utils';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
 
+import 'react-loading-skeleton/dist/skeleton.css';
+
 const inter = Inter({ subsets: ['latin'], preload: true });
 
 export const metadata: Metadata = {

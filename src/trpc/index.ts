@@ -4,6 +4,15 @@ import * as z from 'zod';
 import { TRPCError } from '@trpc/server';
 
 export const appRouter = router({
+  getUserFiles: privateProcedure.query(async ({ ctx }) => {
+    const { userId } = ctx;
+
+    return await db.file.findMany({
+      where: {
+        userId,
+      },
+    });
+  }),
   getFile: privateProcedure
     .input(z.object({ key: z.string() }))
     .mutation(async ({ ctx, input }) => {
