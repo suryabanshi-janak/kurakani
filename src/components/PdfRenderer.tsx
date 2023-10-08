@@ -4,7 +4,13 @@ import { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import { useResizeDetector } from 'react-resize-detector';
 import SimpleBar from 'simplebar-react';
-import { ChevronDown, ChevronUp, RotateCw, Search } from 'lucide-react';
+import {
+  ChevronDown,
+  ChevronUp,
+  Loader2,
+  RotateCw,
+  Search,
+} from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -21,6 +27,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
+import { useToast } from './ui/use-toast';
+import PdfFullScreen from './PdfFullScreen';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -32,10 +40,11 @@ export default function PdfRenderer({ url }: PdfRendererProps) {
   const [numPages, setNumPages] = useState<number>();
   const [currPage, setCurrPage] = useState<number>(1);
   const [scale, setScale] = useState<number>(1);
-  const [renderedScale, setRenderedScale] = useState<number | null>(null);
   const [rotation, setRotation] = useState<number>(0);
 
   const { width, ref } = useResizeDetector();
+
+  const { toast } = useToast();
 
   const CustomPageValidator = z.object({
     page: z
@@ -147,6 +156,8 @@ export default function PdfRenderer({ url }: PdfRendererProps) {
           >
             <RotateCw className='w-4 h-4' />
           </Button>
+
+          <PdfFullScreen fileUrl={url} />
         </div>
       </div>
 
@@ -155,7 +166,19 @@ export default function PdfRenderer({ url }: PdfRendererProps) {
           <div ref={ref}>
             <Document
               file={url}
+              loading={
+                <div className='flex justify-center'>
+                  <Loader2 className='my-24 h-6 w-6 animate-spin' />
+                </div>
+              }
               onLoadSuccess={({ numPages }) => setNumPages(numPages)}
+              onLoadError={() => {
+                toast({
+                  title: 'Error loading PDF',
+                  description: 'Please try again later',
+                  variant: 'destructive',
+                });
+              }}
             >
               <Page
                 pageNumber={currPage}
