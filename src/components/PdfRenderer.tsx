@@ -40,7 +40,10 @@ export default function PdfRenderer({ url }: PdfRendererProps) {
   const [numPages, setNumPages] = useState<number>();
   const [currPage, setCurrPage] = useState<number>(1);
   const [scale, setScale] = useState<number>(1);
+  const [renderedScale, setRenderedScale] = useState<number | null>(null);
   const [rotation, setRotation] = useState<number>(0);
+
+  const isLoading = renderedScale !== scale;
 
   const { width, ref } = useResizeDetector();
 
@@ -180,12 +183,29 @@ export default function PdfRenderer({ url }: PdfRendererProps) {
                 });
               }}
             >
+              {isLoading && renderedScale ? (
+                <Page
+                  key={'@' + renderedScale}
+                  pageNumber={currPage}
+                  width={width ? width : 1}
+                  scale={scale}
+                  rotate={rotation}
+                />
+              ) : null}
+
               <Page
+                key={'@' + scale}
                 pageNumber={currPage}
                 width={width ? width : 1}
                 scale={scale}
                 rotate={rotation}
-                className='max-h-full'
+                className={cn(isLoading ? 'hidden' : '')}
+                loading={
+                  <div className='flex justify-center'>
+                    <Loader2 className='my-24 h-6 w-6 animate-spin' />
+                  </div>
+                }
+                onRenderSuccess={() => setRenderedScale(scale)}
               />
             </Document>
           </div>
