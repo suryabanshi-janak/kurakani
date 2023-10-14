@@ -43,14 +43,26 @@ export default function Messages({ fileId }: MessagesProps) {
     <div className='flex max-h-[calc(100vh-3.5rem-7rem)] border-zinc-200 flex-1 flex-col-reverse gap-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch'>
       {combinedMessages && combinedMessages.length > 0 ? (
         combinedMessages.map((message, i) => {
-          const isNextMessageSame =
+          const isNextMessageSamePerson =
             combinedMessages[i]?.isUserMessage ===
             combinedMessages[i - 1]?.isUserMessage;
 
           if (i === combinedMessages.length - 1) {
-            return <Message key={message.id} />;
+            return (
+              <Message
+                key={message.id}
+                message={message}
+                isNextMessageSamePerson={isNextMessageSamePerson}
+              />
+            );
           } else {
-            return <Message key={message.id} />;
+            return (
+              <Message
+                key={message.id}
+                message={message}
+                isNextMessageSamePerson={isNextMessageSamePerson}
+              />
+            );
           }
         })
       ) : isFetching ? (
