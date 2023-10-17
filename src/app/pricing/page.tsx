@@ -139,7 +139,7 @@ export default async function Page() {
                           {negative ? (
                             <Minus className='h-6 w-6 text-gray-300' />
                           ) : (
-                            <Check className='h-6 w-6 text-blue-500' />
+                            <Check className='h-6 w-6 text-green-500' />
                           )}
                         </div>
                         {footnote ? (
