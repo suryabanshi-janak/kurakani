@@ -3,8 +3,13 @@ import { ArrowRight } from 'lucide-react';
 
 import MaxWidthWrapper from './MaxWidthWrapper';
 import { buttonVariants } from './ui/button';
+import { getAuthSession } from '@/lib/auth-option';
+import UserAccountNav from './UserAccountNav';
 
-export default function Navbar() {
+export default async function Navbar() {
+  const session = await getAuthSession();
+  const user = session?.user;
+
   return (
     <nav className='sticky h-16 inset-x-0 top-0 z-30 w-full border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all'>
       <MaxWidthWrapper>
@@ -17,21 +22,40 @@ export default function Navbar() {
           </Link>
 
           <div className='hidden space-x-4 sm:flex items-center'>
-            <Link
-              href='/pricing'
-              className={buttonVariants({ variant: 'ghost' })}
-            >
-              Pricing
-            </Link>
-            <Link
-              href='/signin'
-              className={buttonVariants({ variant: 'ghost' })}
-            >
-              Sign in
-            </Link>
-            <Link href='/signup' className={buttonVariants({})}>
-              Get started <ArrowRight className='h-4 w-4 ml-2' />
-            </Link>
+            {!user ? (
+              <>
+                <Link
+                  href='/pricing'
+                  className={buttonVariants({ variant: 'ghost' })}
+                >
+                  Pricing
+                </Link>
+                <Link
+                  href='/signin'
+                  className={buttonVariants({ variant: 'ghost' })}
+                >
+                  Sign in
+                </Link>
+                <Link href='/signup' className={buttonVariants({})}>
+                  Get started <ArrowRight className='h-4 w-4 ml-2' />
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link
+                  href='/dashboard'
+                  className={buttonVariants({ variant: 'ghost' })}
+                >
+                  Dashboard
+                </Link>
+
+                <UserAccountNav
+                  name={user?.name ?? 'Your account'}
+                  email={user?.email ?? ''}
+                  imageUrl={user?.image ?? ''}
+                />
+              </>
+            )}
           </div>
         </div>
       </MaxWidthWrapper>
