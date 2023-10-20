@@ -5,6 +5,7 @@ import MaxWidthWrapper from './MaxWidthWrapper';
 import { buttonVariants } from './ui/button';
 import { getAuthSession } from '@/lib/auth-option';
 import UserAccountNav from './UserAccountNav';
+import MobileNav from './MobileNav';
 
 export default async function Navbar() {
   const session = await getAuthSession();
@@ -20,6 +21,8 @@ export default async function Navbar() {
           >
             <span>kurakani.</span>
           </Link>
+
+          <MobileNav isAuth={!!user} />
 
           <div className='hidden space-x-4 sm:flex items-center'>
             {!user ? (
